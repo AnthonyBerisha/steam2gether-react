@@ -24,6 +24,7 @@ class PlayerForm extends Component {
     return (
       <div style={formStyle}>
         {inputFields}
+        <Button variant="contained" color="primary">Get games</Button>
       </div>
     )
   }
