@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import PlayerInput from './PlayerInput';
-import Button from '@material-ui/core/Button';
+import PlayerInput from './PlayerInput'
+import Button from '@material-ui/core/Button'
 
 class PlayerForm extends Component {
   state = {
     amountOfPlayers: 2,
   }
+
+
+
   render () {
     const formStyle = {
       display: 'flex',
@@ -15,21 +18,21 @@ class PlayerForm extends Component {
       justifyContent: 'space-evenly',
       alignItems: 'center'
     }
-    const inputFields = [];
+    const inputFields = []
 
     for (let i = 0; i < this.state.amountOfPlayers; i++) {
       inputFields.push(<PlayerInput index={i} key={i}></PlayerInput>)
     }
 
     return (
-      <div style={formStyle}>
-        {inputFields}
+      <div>
+        <div style={formStyle} className="player-input-container">
+          {inputFields}
+        </div>
         <Button variant="contained" color="primary">Get games</Button>
       </div>
     )
   }
 }
-
-PlayerForm.propTypes = {}
 
 export default PlayerForm
