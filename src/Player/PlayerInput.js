@@ -2,17 +2,10 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 
 const PlayerInput = (props) => {
-  let input
-
-  if (props.index === 0) {
-    input = <TextField label="Steam ID" onBlur={() => console.log('Blur')}></TextField>
-  } else {
-    input = <TextField label="Steam ID"></TextField>
-  }
 
   return (
     <div className={'player-input'}>
-      {input}
+      <TextField label="Steam ID" onChange={(event) => props.handleChange(event.target.value, props.index)} onBlur={(event) => props.handleBlurEvent(event.target.value)}></TextField>
     </div>
   )
 }
