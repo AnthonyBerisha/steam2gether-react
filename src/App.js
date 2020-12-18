@@ -12,7 +12,7 @@ class App extends Component {
 
   getGamesList (playersList) {
     playersList.forEach((player) => {
-      axios.get(process.env.API_URL + '/games/' + player)
+      axios.get(process.env.REACT_APP_API_URL + '/games/' + player)
         .then((res) => {
           console.log(res);
         })
