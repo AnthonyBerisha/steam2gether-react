@@ -12,6 +12,8 @@ class PlayerForm extends Component {
   }
 
   getMainUserData (userId) {
+    if (!userId)
+      return;
     console.log(userId)
     axios.get('https://steam2gether-server.vercel.app/user/' + userId + '/friends')
       .then((res) => {
