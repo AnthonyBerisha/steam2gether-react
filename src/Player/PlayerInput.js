@@ -5,7 +5,9 @@ const PlayerInput = (props) => {
 
   return (
     <div className={'player-input'}>
-      <TextField label="Steam ID" onChange={(event) => props.handleChange(event.target.value, props.index)} onBlur={(event) => props.handleBlurEvent(event.target.value)}></TextField>
+      <TextField label="Steam ID"
+                 onChange={(event) => props.handleChange(event.target.value, props.index)}
+                 onBlur={(event) => props.handleBlurEvent(event.target.value)}></TextField>
     </div>
   )
 }

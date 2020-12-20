@@ -7,7 +7,7 @@ import PlayerForm from './Player/PlayerForm'
 
 class App extends Component {
   state = {
-    playersGamesList: [],
+    commonGamesList: [],
     isLoading: false
   }
 
@@ -15,8 +15,8 @@ class App extends Component {
     this.setState({ isLoading: loading })
   }
 
-  setGamesList (playersGamesList) {
-    this.setState({ playersGamesList: playersGamesList })
+  setGamesList (commonGamesList) {
+    this.setState({ commonGamesList: commonGamesList })
   }
 
   render () {

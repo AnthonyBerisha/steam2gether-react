@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import PlayerInput from './PlayerInput'
-import Alert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert'
 import Button from '@material-ui/core/Button'
 
 class PlayerForm extends Component {
@@ -28,55 +28,54 @@ class PlayerForm extends Component {
   }
 
   countFilledInputs () {
-    let count = 0;
+    let count = 0
     this.state.playersFieldsValue.forEach((value, index) => {
       if (value !== '') {
-        count++;
+        count++
       }
     })
-    return count;
+    return count
   }
 
   createNewField (value) {
     if (this.countFilledInputs() === this.state.amountOfPlayers) {
-      this.setState({ amountOfPlayers: this.state.amountOfPlayers + 1 });
+      this.setState({ amountOfPlayers: this.state.amountOfPlayers + 1 })
     }
   }
 
   handleChange (value, index) {
-    let newValues = this.state.playersFieldsValue;
-    newValues[index] = value;
-    this.setState({ playersFieldsValue: newValues });
+    let newValues = this.state.playersFieldsValue
+    newValues[index] = value
+    this.setState({ playersFieldsValue: newValues })
   }
 
   getGamesList () {
     if (this.countFilledInputs() < 2) {
-      this.setState({alert: true});
-      return;
-    }
-    else
-      this.setState({alert: false})
-    this.props.handleIsLoading(true);
+      this.setState({ alert: true })
+      return
+    } else
+      this.setState({ alert: false })
+
+    this.props.handleIsLoading(true)
     let url
     if (process.env.NODE_ENV === 'development')
+      // url = 'http://localhost:4000/'
       url = 'https://steam2gether-server.vercel.app/'
     else
       url = process.env.REACT_APP_API_URL
-
-    let playersGamesList = [];
-
-    this.state.playersFieldsValue.forEach((player) => {
-      axios.get(url + 'games/' + player)
-        .then((res) => {
-          this.props.handleIsLoading(false);
-          playersGamesList.push({id: player, games: res.data.response.games})
-          console.log(res.data.response.games)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    })
-    this.props.setGamesList(playersGamesList);
+    let commonGamesList = []
+    axios.get(url + `games?ids=${this.state.playersFieldsValue.join(',')}`)
+      .then((res) => {
+        commonGamesList = res.data
+        console.log()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        this.props.setGamesList(commonGamesList);
+        this.props.handleIsLoading(false);
+      })
   }
 
   render () {
@@ -101,7 +100,7 @@ class PlayerForm extends Component {
       }
     }
 
-    let alert = null;
+    let alert = null
     if (this.state.alert)
       alert = <Alert severity='error'>Please provide at least 2 Steam IDs</Alert>
 
