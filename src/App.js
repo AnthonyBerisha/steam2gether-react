@@ -4,6 +4,7 @@ import './App.css'
 import LinearProgress from '@material-ui/core/LinearProgress'
 
 import PlayerForm from './Player/PlayerForm'
+import GamesList from './Game/GamesList'
 
 class App extends Component {
   state = {
@@ -27,6 +28,7 @@ class App extends Component {
         <PlayerForm handleIsLoading={this.handleLoader.bind(this)}
                     setGamesList={this.setGamesList.bind(this)}></PlayerForm>
         {this.state.isLoading ? <LinearProgress/> : null}
+        <GamesList commonGamesList={this.state.commonGamesList}></GamesList>
       </div>
     )
   }

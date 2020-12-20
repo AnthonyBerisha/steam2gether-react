@@ -7,3 +7,17 @@
     margin-bottom: 50px;
 }
 
+.game-list .game-miniature:not(:last-child) {
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+.game-miniature-overlay {
+    visibility: hidden;
+    background-color: red;
+    z-index: 1;
+}
+
+.game-miniature-overlay:hover {
+    visibility: visible;
+}
