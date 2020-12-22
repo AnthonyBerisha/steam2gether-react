@@ -1,86 +1,34 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import axios from 'axios'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
-import Player from './Player/Player'
-import Button from './Button'
+import PlayerForm from './Player/PlayerForm'
+import GamesList from './Game/GamesList'
 
 class App extends Component {
   state = {
-    amountOfPlayers: 2,
-    players: [
-      { id: '76561198015418034' },
-      { id: '76561197960812074' }
-    ]
+    commonGamesList: [],
+    isLoading: false
   }
 
-  playerChangehandler (event, index) {
-    let player = this.state.players[index]
-    player.id = event.target.value
-
-    let players = this.state.players
-    players[index] = player
-
-    this.setState({ players })
+  handleLoader (loading) {
+    this.setState({ isLoading: loading })
   }
 
-  requestAllPlayers () {
-    let playersId = ''
-    this.state.players.forEach(p => {
-      playersId += (p.id + ',')
-    })
-
-    axios.get('https://steam2gether-server.vercel.app/user/' + playersId)
-      .then(res => {
-        console.log(res)
-
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-    let players = this.state.players
-
-    this.setState({ players })
-  }
-
-  generateInputs () {
-    let inputs = []
-    for (let i = 0; i < this.state.amountOfPlayers; i++) {
-      inputs.push(<Player playerChangeHandler={(event) => this.playerChangehandler(event, i)}
-                          playerRef={this.state.players[i].id}
-                          key={i}
-      ></Player>)
-    }
-
-    return inputs
-  }
-
-  clickButtonHandler (type) {
-    let players = this.state.players
-
-    if (type === 'less' && this.state.amountOfPlayers > 2) {
-      players.pop()
-      this.setState({ amountOfPlayers: this.state.amountOfPlayers - 1 })
-    } else if (type === 'more') {
-      this.setState({ amountOfPlayers: this.state.amountOfPlayers + 1 })
-      players.push({ id: '', data: '' })
-    }
-    this.setState({ players: players })
+  setGamesList (commonGamesList) {
+    this.setState({ commonGamesList: commonGamesList })
   }
 
   render () {
-
     return (
       <div className="App">
-        <div className='player-container'>
-          <Button clickButtonHandler={() => this.clickButtonHandler('less')}>-</Button>
-          {this.generateInputs()}
-          <Button clickButtonHandler={() => this.clickButtonHandler('more')}>+</Button>
-
-          <button onClick={this.requestAllPlayers.bind(this)}>Get !</button>
-        </div>
+        <h1>Steam 2 Gether</h1>
+        <p>Find games and play together easily.</p>
+        <PlayerForm handleIsLoading={this.handleLoader.bind(this)}
+                    setGamesList={this.setGamesList.bind(this)}></PlayerForm>
+        {this.state.isLoading ? <LinearProgress/> : null}
+        <GamesList commonGamesList={this.state.commonGamesList}></GamesList>
       </div>
     )
   }
